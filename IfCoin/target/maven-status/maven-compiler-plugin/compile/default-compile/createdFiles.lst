@@ -2,8 +2,12 @@ view\TelaLogin.class
 dao\HistoricoDAO.class
 view\TelaInicial$1.class
 view\TelaLogin$3.class
+view\TelaAtualizacaoSenha$3.class
 view\TelaInicial.class
 view\TelaCadastroUsuario$2.class
+view\TelaAtualizacaoSenha$2.class
+view\TelaAtualizacaoSenha$1.class
+view\TelaAtualizacaoSenha.class
 view\TelaCadastroUsuario.class
 view\TelaCadastroUsuario$1.class
 view\TelaLogin$1.class

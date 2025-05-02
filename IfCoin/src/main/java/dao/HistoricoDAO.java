@@ -60,12 +60,13 @@ public class HistoricoDAO {
         PreparedStatement stmt = null;
 
         try {
-            String sql = "UPDATE historico SET idusuario = ?, senha = ? WHERE idhistorico = ? ";
+            String sql = "UPDATE historico SET idusuario = ?, senha = ?, dataUltimaTroca = ? WHERE idhistorico = ? ";
 
             stmt = conn.prepareStatement(sql);
-           stmt.setInt(1, historico.getIdUsuario());
-           stmt.setString(2, historico.getSenhaAntiga());
-           stmt.setInt(3, historico.getIdHistorico());
+            stmt.setInt(1, historico.getIdUsuario());
+            stmt.setString(2, historico.getSenhaAntiga());
+            stmt.setDate(3, new java.sql.Date(System.currentTimeMillis())); // Data atual
+            stmt.setInt(4, historico.getIdHistorico());
 
             stmt.execute();
             stmt.close();

@@ -4,6 +4,8 @@
  */
 package view;
 
+import classes.Principal;
+
 /**
  *
  * @author leand
@@ -15,6 +17,7 @@ public class TelaInicial extends javax.swing.JFrame {
      */
     public TelaInicial() {
         initComponents();
+        setarLabel();
     }
 
     /**
@@ -33,7 +36,6 @@ public class TelaInicial extends javax.swing.JFrame {
         setTitle("Tela Inicial");
 
         lblBoasVindas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBoasVindas.setText("Seja bem-vindo!");
         lblBoasVindas.setToolTipText("");
 
         btnVoltar.setText("Voltar");
@@ -48,13 +50,13 @@ public class TelaInicial extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(231, Short.MAX_VALUE)
                 .addComponent(btnVoltar)
                 .addGap(97, 97, 97))
             .addGroup(layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(lblBoasVindas, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(lblBoasVindas, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,6 +109,10 @@ public class TelaInicial extends javax.swing.JFrame {
                 new TelaInicial().setVisible(true);
             }
         });
+    }
+    
+    private void setarLabel(){
+        lblBoasVindas.setText("Seja Bem-Vindo " + Principal.usuarioLogado.getNomeUsuario() + "!");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

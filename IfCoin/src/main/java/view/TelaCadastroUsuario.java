@@ -123,8 +123,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             String nomeUsuario = txtUsuarioCadastro.getText();
             String senhaUsuario = String.valueOf(passwordFieldSenhaCadastro.getPassword());
             
+            java.util.Date dataUltimaSenha = new java.util.Date();
+            
             user.setNomeUsuario(nomeUsuario);
             user.setSenhaUsuario(senhaUsuario);
+            user.setDataUltimaTroca(dataUltimaSenha);
             
             inserido = usuarioDao.insert(user);
             

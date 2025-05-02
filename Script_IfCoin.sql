@@ -18,3 +18,5 @@ INSERT INTO usuario(usuario, senha) values ("Luciano Pereira", "17122006");
 
 select * from usuario;
 select * from historico;
+
+ALTER TABLE usuario ADD COLUMN dataUltimaTroca DATE; 

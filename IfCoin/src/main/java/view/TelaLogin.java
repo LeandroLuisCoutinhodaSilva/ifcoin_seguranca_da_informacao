@@ -7,6 +7,8 @@ package view;
 import classes.Principal;
 import classes.Usuario;
 import dao.UsuarioDAO;
+import java.sql.Date;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 /**
@@ -105,18 +107,31 @@ public class TelaLogin extends javax.swing.JFrame {
         usr.setNomeUsuario(txtUsuario.getText());
         usr.setSenhaUsuario(String.valueOf(passwordFieldSenha.getPassword()));
 
-        if (validaFormLogin()) {
+        if (validaFormLogin() ) {
             UsuarioDAO usrDao = new UsuarioDAO();
             Usuario usrLogin = usrDao.login(usr);
-
+            
             if (usrLogin != null) {
-
-                Principal.usuarioLogado.setIdUsuario(usrLogin.getIdUsuario());
+                System.out.println(usrLogin);
+                if(isSenhaValida(usrLogin)){
+                    
+                }else{
+                     JOptionPane.showMessageDialog(this,
+                    "A senha precisa ser atualizada!",
+                    this.getTitle(),
+                    JOptionPane.WARNING_MESSAGE);
+                    TelaAtualizacaoSenha telaAtualizacao = new TelaAtualizacaoSenha(usrLogin);
+                    telaAtualizacao.setVisible(true);
+                    return;
+                }
+                
+                Principal.usuarioLogado = usrLogin;
 
                 System.out.println("Login realizado com sucesso!");
                 TelaInicial telaInicial = new TelaInicial();
                 telaInicial.setVisible(true);
             } else {
+                System.out.println(usrLogin);
                 JOptionPane.showMessageDialog(this,
                         "Usuário ou Senha inválido!",
                         this.getTitle(),
@@ -185,6 +200,20 @@ public class TelaLogin extends javax.swing.JFrame {
         }
 
         return true;
+    }
+    
+    public boolean isSenhaValida(Usuario usuario) {
+        // Data atual
+        Date dataAtual = new Date(System.currentTimeMillis());
+
+        // Verificar diferença de dias entre a data de última troca e a data atual
+        long diffInMillies = Math.abs(dataAtual.getTime() - usuario.getDataUltimaTroca().getTime());
+        long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        if (diffInDays > 45 || usuario.getDataUltimaTroca() == null) {             
+            return false; // A senha precisa ser alterada
+        }
+        return true; // A senha ainda está válida
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

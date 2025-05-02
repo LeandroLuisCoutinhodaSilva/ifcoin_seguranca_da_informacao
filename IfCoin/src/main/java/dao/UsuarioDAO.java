@@ -25,20 +25,20 @@ public class UsuarioDAO {
         Usuario usrReturn = null;
 
         try {
-            String sql = " SELECT * from usuario WHERE usuario = ? "
-                    + "       AND senha = ?";
+            String sql = "SELECT * FROM usuario WHERE usuario = ? AND senha = ?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, usr.getNomeUsuario());
             stmt.setString(2, usr.getSenhaUsuario());
-
+            
             ResultSet res = stmt.executeQuery();
 
             while (res.next()) {
 
                 usrReturn = new Usuario(res.getInt("idusuario"),
                         res.getString("usuario"),
-                        res.getString("senha"));                     
+                        res.getString("senha"), 
+                        res.getDate("dataUltimaTroca"));
             }
 
             res.close();
@@ -63,12 +63,16 @@ public class UsuarioDAO {
         ResultSet generatedKeys = null;
 
         try {
-            String sql = "INSERT INTO usuario (usuario, senha) "
-                    + "         VALUES (?,?)";
+            String sql = "INSERT INTO usuario (usuario, senha, dataUltimaTroca) "
+                    + "         VALUES (?,?,?)";
 
             stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, usr.getNomeUsuario());
             stmt.setString(2, usr.getSenhaUsuario());
+            
+            java.sql.Date dataFormatoSql = new java.sql.Date(usr.getDataUltimaTroca().getTime());
+            
+            stmt.setDate(3, dataFormatoSql);
 
             int linhasAfetadas = stmt.executeUpdate();
             
@@ -107,12 +111,16 @@ public class UsuarioDAO {
         PreparedStatement stmt = null;
 
         try {
-            String sql = "UPDATE usuario SET usuario = ?, senha = ? WHERE idusuario = ? ";
+            String sql = "UPDATE usuario SET usuario = ?, senha = ?, dataUltimaTroca = ? WHERE idusuario = ? ";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, usr.getNomeUsuario());
             stmt.setString(2, usr.getSenhaUsuario());
-            stmt.setInt(3, usr.getIdUsuario());
+            
+            java.sql.Date dataFormatoSql = new java.sql.Date(usr.getDataUltimaTroca().getTime());
+            
+            stmt.setDate(3, dataFormatoSql);
+            stmt.setInt(4, usr.getIdUsuario());
 
             stmt.execute();
             stmt.close();
@@ -144,7 +152,8 @@ public class UsuarioDAO {
                 Usuario usuario;
                 usuario = new Usuario(res.getInt("idusuario"),
                         res.getString("usuario"),
-                        res.getString("senha"));
+                        res.getString("senha"),
+                        res.getDate("dataUltimaTroca"));
 
                 listaUsuario.add(usuario);
 
